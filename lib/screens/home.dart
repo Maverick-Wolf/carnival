@@ -36,20 +36,25 @@ class Home extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: Colors.grey[400]),
-                          height: 70.0,
-                          width: MediaQuery.of(context).size.width - 20.0,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              response[index].toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                letterSpacing: 1.2,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/productlist', arguments: {"category": response[index]});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Colors.grey[400]),
+                            height: 70.0,
+                            width: MediaQuery.of(context).size.width - 20.0,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                response[index].toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
                             ),
                           ),
