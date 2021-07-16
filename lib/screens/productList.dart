@@ -60,9 +60,18 @@ class _ProductListState extends State<ProductList> {
                               child: Column(
                                 children: [
                                   // Text("Test Message"),
-                                  Image(
-                                    image:
-                                        NetworkImage(response[index]['image']),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/productdesc', arguments: {"image": response[index]['image']});
+                                    },
+                                    child: Hero(
+                                      tag: "product",
+                                      child: Image(
+                                        image: NetworkImage(
+                                            response[index]['image']),
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10.0,
@@ -81,7 +90,9 @@ class _ProductListState extends State<ProductList> {
                   ),
                 );
               } else {
-                return Container();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             }),
       ),
