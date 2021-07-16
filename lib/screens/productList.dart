@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'dart:convert';
 
 class ProductList extends StatefulWidget {
@@ -36,39 +37,49 @@ class _ProductListState extends State<ProductList> {
         ),
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF333333),
       body: SafeArea(
         child: FutureBuilder(
             future: getProduct(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List response = jsonDecode(snapshot.data);
-                return ListView.builder(
+                return AnimationLimiter(
+                  child: StaggeredGridView.countBuilder(
+                    crossAxisCount: 2,
                     itemCount: response.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: Colors.grey[400]),
-                          height: 100.0,
-                          width: MediaQuery.of(context).size.width - 20.0,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              response[index]['title'],
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                letterSpacing: 1.2,
+                      return AnimationConfiguration.staggeredGrid(
+                        position: index,
+                        duration: Duration(seconds: 2),
+                        columnCount: 2,
+                        child: ScaleAnimation(
+                          child: FadeInAnimation(
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  // Text("Test Message"),
+                                  Image(
+                                    image:
+                                        NetworkImage(response[index]['image']),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Text("Test Message lets see"),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       );
-                    });
+                    },
+                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 8.0,
+                  ),
+                );
               } else {
                 return Container();
               }
