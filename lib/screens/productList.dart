@@ -63,10 +63,10 @@ class _ProductListState extends State<ProductList> {
                                   InkWell(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, '/productdesc', arguments: {"image": response[index]['image']});
+                                          context, '/productdesc', arguments: {"image": response[index]['image'], "index": index});
                                     },
                                     child: Hero(
-                                      tag: "product",
+                                      tag: "product$index",
                                       child: Image(
                                         image: NetworkImage(
                                             response[index]['image']),
