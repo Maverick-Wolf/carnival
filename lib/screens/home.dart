@@ -12,16 +12,19 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Select A Category",
-          style: TextStyle(
-            fontSize: 25.0,
-            letterSpacing: 2.0,
-            fontWeight: FontWeight.w700,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          title: Text(
+            "Select A Category",
+            style: TextStyle(
+              fontSize: 20.0,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w700,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -38,7 +41,8 @@ class Home extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, '/productlist', arguments: {"category": response[index]});
+                            Navigator.pushNamed(context, '/productlist',
+                                arguments: {"category": response[index]});
                           },
                           child: Container(
                             decoration: BoxDecoration(
