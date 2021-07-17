@@ -72,7 +72,7 @@ class _ProductListState extends State<ProductList> {
                                         "image": response[index]['image'],
                                         "index": index,
                                         "title": response[index]['title'],
-                                        "category": response[index]['category'],
+                                        "price": response[index]['price'],
                                         "desc": response[index]['description'],
                                       });
                                 },
