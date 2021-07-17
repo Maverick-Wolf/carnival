@@ -26,16 +26,19 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Select A Product",
-          style: TextStyle(
-            fontSize: 25.0,
-            letterSpacing: 2.0,
-            fontWeight: FontWeight.w700,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          title: Text(
+            "Select A Product",
+            style: TextStyle(
+              fontSize: 20.0,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w700,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
       ),
       backgroundColor: Color(0xFF333333),
       body: SafeArea(
@@ -55,32 +58,23 @@ class _ProductListState extends State<ProductList> {
                         columnCount: 2,
                         child: ScaleAnimation(
                           child: FadeInAnimation(
-                            child: Container(
-                              color: Colors.white,
-                              child: Column(
-                                children: [
-                                  // Text("Test Message"),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, '/productdesc', arguments: {
-                                        "image": response[index]['image'],
-                                        "index": index
-                                      });
-                                    },
-                                    child: Hero(
-                                      tag: "product$index",
-                                      child: Image(
-                                        image: NetworkImage(
-                                            response[index]['image']),
-                                      ),
-                                    ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/productdesc',
+                                    arguments: {
+                                      "image": response[index]['image'],
+                                      "index": index
+                                    });
+                              },
+                              child: Hero(
+                                tag: "product$index",
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image(
+                                    image:
+                                        NetworkImage(response[index]['image']),
                                   ),
-                                  // SizedBox(
-                                  //   height: 10.0,
-                                  // ),
-                                  // Text("Test Message lets see"),
-                                ],
+                                ),
                               ),
                             ),
                           ),
