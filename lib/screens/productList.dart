@@ -63,7 +63,10 @@ class _ProductListState extends State<ProductList> {
                                   InkWell(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, '/productdesc', arguments: {"image": response[index]['image'], "index": index});
+                                          context, '/productdesc', arguments: {
+                                        "image": response[index]['image'],
+                                        "index": index
+                                      });
                                     },
                                     child: Hero(
                                       tag: "product$index",
@@ -73,10 +76,10 @@ class _ProductListState extends State<ProductList> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Text("Test Message lets see"),
+                                  // SizedBox(
+                                  //   height: 10.0,
+                                  // ),
+                                  // Text("Test Message lets see"),
                                 ],
                               ),
                             ),

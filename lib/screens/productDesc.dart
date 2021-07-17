@@ -7,6 +7,15 @@ class ProductDesc extends StatefulWidget {
 }
 
 class _ProductDescState extends State<ProductDesc> {
+  bool isVisible = true;
+  bool isVisible2 = false;
+  void toggleButton() {
+    setState(() {
+      isVisible = !isVisible;
+      isVisible2 = !isVisible2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     dynamic dataReceived = ModalRoute.of(context).settings.arguments;
@@ -32,14 +41,44 @@ class _ProductDescState extends State<ProductDesc> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Hero(
-                    tag: "product${dataReceived['index']}",
-                    child: Center(
-                      child: Image(
-                        height: (MediaQuery.of(context).size.height / 2) - 70.0,
-                        image: NetworkImage(dataReceived['image']),
+                  Stack(
+                    children: [
+                      Hero(
+                        tag: "product${dataReceived['index']}",
+                        child: Image(
+                          height:
+                              (MediaQuery.of(context).size.height / 2) - 70.0,
+                          width: (MediaQuery.of(context).size.width / 2) - 40.0,
+                          image: NetworkImage(dataReceived['image']),
+                        ),
                       ),
-                    ),
+                      Visibility(
+                        visible: isVisible2,
+                        child: Positioned(
+                          top: 0.0,
+                          right: 5.0,
+                          child: IconButton(
+                              color: Colors.red,
+                              icon: Icon(Icons.favorite_rounded),
+                              onPressed: () {
+                                toggleButton();
+                              }),
+                        ),
+                      ),
+                      Visibility(
+                        visible: isVisible,
+                        child: Positioned(
+                          top: 0.0,
+                          right: 5.0,
+                          child: IconButton(
+                              color: Colors.red,
+                              icon: Icon(Icons.favorite_outline_rounded),
+                              onPressed: () {
+                                toggleButton();
+                              }),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
