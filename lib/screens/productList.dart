@@ -25,22 +25,24 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
+    Map respo = ModalRoute.of(context).settings.arguments;
+    String title = respo['category'].toString();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(40.0),
         child: AppBar(
           title: Text(
-            "Select A Product",
+            "${title.toUpperCase()}",
             style: TextStyle(
-              fontSize: 20.0,
-              letterSpacing: 2.0,
+              fontSize: 17.5,
+              letterSpacing: 1.5,
               fontWeight: FontWeight.w700,
             ),
           ),
           centerTitle: true,
         ),
       ),
-      backgroundColor: Color(0xFF333333),
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: FutureBuilder(
             future: getProduct(),
@@ -54,26 +56,41 @@ class _ProductListState extends State<ProductList> {
                     itemBuilder: (context, index) {
                       return AnimationConfiguration.staggeredGrid(
                         position: index,
-                        duration: Duration(seconds: 2),
+                        duration: Duration(milliseconds: 1500),
                         columnCount: 2,
                         child: ScaleAnimation(
                           child: FadeInAnimation(
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/productdesc',
-                                    arguments: {
-                                      "image": response[index]['image'],
-                                      "index": index
-                                    });
-                              },
-                              child: Hero(
-                                tag: "product$index",
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image(
-                                    image:
-                                        NetworkImage(response[index]['image']),
-                                  ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.white,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/productdesc',
+                                      arguments: {
+                                        "image": response[index]['image'],
+                                        "index": index,
+                                        "title": response[index]['title'],
+                                        "category": response[index]['category'],
+                                        "desc": response[index]['description'],
+                                      });
+                                },
+                                child: Column(
+                                  children: [
+                                    Hero(
+                                      tag: "product$index",
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        child: Image(
+                                          image: NetworkImage(
+                                              response[index]['image']),
+                                        ),
+                                      ),
+                                    ),
+                                    Text("test"),
+                                  ],
                                 ),
                               ),
                             ),

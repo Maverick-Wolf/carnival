@@ -42,46 +42,50 @@ class _ProductDescState extends State<ProductDesc> {
               color: Colors.white,
               // height: 200.0,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    children: [
-                      Hero(
-                        tag: "product${dataReceived['index']}",
-                        child: Image(
-                          height:
-                              (MediaQuery.of(context).size.height / 2) - 70.0,
-                          width: (MediaQuery.of(context).size.width / 2) - 40.0,
-                          image: NetworkImage(dataReceived['image']),
+                  Center(
+                    child: Stack(
+                      children: [
+                        Hero(
+                          tag: "product${dataReceived['index']}",
+                          child: Image(
+                            height:
+                                (MediaQuery.of(context).size.height / 2) - 55.0,
+                            width:
+                                (MediaQuery.of(context).size.width / 2) - 27.0,
+                            image: NetworkImage(dataReceived['image']),
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: isVisible2,
-                        child: Positioned(
-                          top: 0.0,
-                          right: 5.0,
-                          child: IconButton(
-                              color: Colors.red,
-                              icon: Icon(Icons.favorite_rounded),
-                              onPressed: () {
-                                toggleButton();
-                              }),
+                        Visibility(
+                          visible: isVisible2,
+                          child: Positioned(
+                            top: 0.0,
+                            right: 5.0,
+                            child: IconButton(
+                                color: Colors.red,
+                                icon: Icon(Icons.favorite_rounded),
+                                onPressed: () {
+                                  toggleButton();
+                                }),
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: isVisible,
-                        child: Positioned(
-                          top: 0.0,
-                          right: 5.0,
-                          child: IconButton(
-                              color: Colors.red,
-                              icon: Icon(Icons.favorite_outline_rounded),
-                              onPressed: () {
-                                toggleButton();
-                              }),
+                        Visibility(
+                          visible: isVisible,
+                          child: Positioned(
+                            top: 0.0,
+                            right: 5.0,
+                            child: IconButton(
+                                color: Colors.red,
+                                icon: Icon(Icons.favorite_outline_rounded),
+                                onPressed: () {
+                                  toggleButton();
+                                }),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
