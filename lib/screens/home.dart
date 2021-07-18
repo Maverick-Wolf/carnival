@@ -40,6 +40,7 @@ class Home extends StatelessWidget {
                       return Padding(
                         padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
                         child: InkWell(
+                          // splashColor: Colors.blue,
                           onTap: () {
                             Navigator.pushNamed(context, '/productlist',
                                 arguments: {"category": response[index]});

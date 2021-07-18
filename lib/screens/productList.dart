@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -23,92 +24,146 @@ class _ProductListState extends State<ProductList> {
     return response.body;
   }
 
+  getFuture() {
+    return FutureBuilder(
+        future: getProduct(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List response = jsonDecode(snapshot.data);
+            return AnimationLimiter(
+              child: SliverStaggeredGrid.countBuilder(
+                crossAxisCount: 2,
+                itemCount: response.length,
+                itemBuilder: (context, index) {
+                  return AnimationConfiguration.staggeredGrid(
+                    position: index,
+                    duration: Duration(milliseconds: 1500),
+                    columnCount: 2,
+                    child: ScaleAnimation(
+                      child: FadeInAnimation(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            color: Colors.white,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/productdesc',
+                                  arguments: {
+                                    "image": response[index]['image'],
+                                    "index": index,
+                                    "title": response[index]['title'],
+                                    "price": response[index]['price'],
+                                    "desc": response[index]['description'],
+                                  });
+                            },
+                            child: Column(
+                              children: [
+                                Hero(
+                                  tag: "product$index",
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          response[index]['image']),
+                                    ),
+                                  ),
+                                ),
+                                Text("test"),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 8.0,
+              ),
+            );
+          } else {
+            return SliverToBoxAdapter(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
+  }
+
+  int selectedIndex = 0;
+  onSelected(int index) {
+    setState(() => selectedIndex = index);
+  }
+
   @override
   Widget build(BuildContext context) {
     Map respo = ModalRoute.of(context).settings.arguments;
-    String title = respo['category'].toString();
+    // String title = respo['category'].toString();
+    List<String> title = [
+      "msg 1",
+      "msg 2",
+      "msg 3",
+      "msg 4",
+      "msg 6",
+      "msg 7",
+      "msg 8",
+      "msg 9",
+      "msg 10"
+    ];
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.0),
-        child: AppBar(
-          title: Text(
-            "${title.toUpperCase()}",
-            style: TextStyle(
-              fontSize: 17.5,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          centerTitle: true,
-        ),
-      ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.black,
       body: SafeArea(
-        child: FutureBuilder(
-            future: getProduct(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final List response = jsonDecode(snapshot.data);
-                return AnimationLimiter(
-                  child: StaggeredGridView.countBuilder(
-                    crossAxisCount: 2,
-                    itemCount: response.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredGrid(
-                        position: index,
-                        duration: Duration(milliseconds: 1500),
-                        columnCount: 2,
-                        child: ScaleAnimation(
-                          child: FadeInAnimation(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.black,
+              title: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: 60.0,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: title.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
+                          child: InkWell(
+                            onTap: () => onSelected(index),
                             child: Container(
+                              padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                              height: 60.0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: selectedIndex != null &&
+                                        selectedIndex == index
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/productdesc',
-                                      arguments: {
-                                        "image": response[index]['image'],
-                                        "index": index,
-                                        "title": response[index]['title'],
-                                        "price": response[index]['price'],
-                                        "desc": response[index]['description'],
-                                      });
-                                },
-                                child: Column(
-                                  children: [
-                                    Hero(
-                                      tag: "product$index",
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        child: Image(
-                                          image: NetworkImage(
-                                              response[index]['image']),
-                                        ),
-                                      ),
-                                    ),
-                                    Text("test"),
-                                  ],
+                              child: Center(
+                                child: Text(
+                                  "${title[index]}",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 8.0,
-                  ),
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+                        );
+                      }),
+                ),
+              ),
+              floating: true,
+              expandedHeight: 70.0,
+            ),
+            getFuture(),
+          ],
+        ),
       ),
     );
   }
