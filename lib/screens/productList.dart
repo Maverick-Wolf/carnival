@@ -100,18 +100,12 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
-    Map respo = ModalRoute.of(context).settings.arguments;
-    // String title = respo['category'].toString();
     List<String> title = [
-      "msg 1",
-      "msg 2",
-      "msg 3",
-      "msg 4",
-      "msg 6",
-      "msg 7",
-      "msg 8",
-      "msg 9",
-      "msg 10"
+      "All",
+      "Electronics",
+      "Jewelery",
+      "Men's Clothing",
+      "Womens's Clothing",
     ];
     return Scaffold(
       backgroundColor: Colors.black,
@@ -148,7 +142,10 @@ class _ProductListState extends State<ProductList> {
                                 child: Text(
                                   "${title[index]}",
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: selectedIndex != null &&
+                                            selectedIndex == index
+                                        ? Colors.black
+                                        : Colors.white,
                                   ),
                                 ),
                               ),
