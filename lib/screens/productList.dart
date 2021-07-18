@@ -131,7 +131,7 @@ class _ProductListState extends State<ProductList> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
+                              const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                           child: InkWell(
                             onTap: () {
                               onSelected(index);
@@ -143,7 +143,6 @@ class _ProductListState extends State<ProductList> {
                             },
                             child: Container(
                               padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                              height: 60.0,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.0),
                                 color: selectedIndex != null &&
@@ -159,6 +158,7 @@ class _ProductListState extends State<ProductList> {
                                             selectedIndex == index
                                         ? Colors.black
                                         : Colors.white,
+                                    fontSize: 16.0,
                                   ),
                                 ),
                               ),
