@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     routes: {
-      '/': (context) => Home(),
+      '/': (context) => ProductList(),
       '/productlist': (context) => ProductList(),
       '/productdesc': (cobtext) => ProductDesc(),
     },

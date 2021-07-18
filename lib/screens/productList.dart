@@ -11,22 +11,28 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
-  getProduct() async {
-    dynamic dataReceived = ModalRoute.of(context).settings.arguments;
-    String url;
-    if (dataReceived['category'] == 'All Products') {
-      url = 'https://fakestoreapi.com/products';
+  String url = 'https://fakestoreapi.com/products';
+  setUrl(String endUrl) {
+    if (endUrl == 'All') {
+      setState(() {
+        url = 'https://fakestoreapi.com/products';
+      });
     } else {
-      url =
-          'https://fakestoreapi.com/products/category/${dataReceived['category']}';
+      setState(() {
+        url =
+            'https://fakestoreapi.com/products/category/${endUrl.toLowerCase()}';
+      });
     }
-    Response response = await get(Uri.parse("$url"));
+  }
+
+  getProduct(String urll) async {
+    Response response = await get(Uri.parse("$urll"));
     return response.body;
   }
 
-  getFuture() {
+  getFuture(String urll) {
     return FutureBuilder(
-        future: getProduct(),
+        future: getProduct(urll),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List response = jsonDecode(snapshot.data);
@@ -105,7 +111,7 @@ class _ProductListState extends State<ProductList> {
       "Electronics",
       "Jewelery",
       "Men's Clothing",
-      "Womens's Clothing",
+      "Women's Clothing",
     ];
     return Scaffold(
       backgroundColor: Colors.black,
@@ -127,7 +133,14 @@ class _ProductListState extends State<ProductList> {
                           padding:
                               const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
                           child: InkWell(
-                            onTap: () => onSelected(index),
+                            onTap: () {
+                              onSelected(index);
+                              if (title[index] != "All") {
+                                setUrl(title[index]);
+                              } else {
+                                setUrl('All');
+                              }
+                            },
                             child: Container(
                               padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
                               height: 60.0,
@@ -158,7 +171,7 @@ class _ProductListState extends State<ProductList> {
               floating: true,
               expandedHeight: 70.0,
             ),
-            getFuture(),
+            getFuture(url),
           ],
         ),
       ),
