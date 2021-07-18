@@ -24,81 +24,6 @@ class _ProductListState extends State<ProductList> {
       });
     }
   }
-
-  getProduct(String urll) async {
-    Response response = await get(Uri.parse("$urll"));
-    return response.body;
-  }
-
-  getFuture(String urll) {
-    return FutureBuilder(
-        future: getProduct(urll),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final List response = jsonDecode(snapshot.data);
-            return AnimationLimiter(
-              child: SliverStaggeredGrid.countBuilder(
-                crossAxisCount: 2,
-                itemCount: response.length,
-                itemBuilder: (context, index) {
-                  return AnimationConfiguration.staggeredGrid(
-                    position: index,
-                    duration: Duration(milliseconds: 1500),
-                    columnCount: 2,
-                    child: ScaleAnimation(
-                      child: FadeInAnimation(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            color: Colors.white,
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/productdesc',
-                                  arguments: {
-                                    "image": response[index]['image'],
-                                    "index": index,
-                                    "title": response[index]['title'],
-                                    "price": response[index]['price'],
-                                    "desc": response[index]['description'],
-                                  });
-                            },
-                            child: Column(
-                              children: [
-                                Hero(
-                                  tag: "product$index",
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: Image(
-                                      image: NetworkImage(
-                                          response[index]['image']),
-                                    ),
-                                  ),
-                                ),
-                                Text("test"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 8.0,
-              ),
-            );
-          } else {
-            return SliverToBoxAdapter(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        });
-  }
-
   int selectedIndex = 0;
   onSelected(int index) {
     setState(() => selectedIndex = index);
@@ -106,6 +31,83 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
+    getProduct(String urll) async {
+      Response response = await get(Uri.parse("$urll"));
+      return response.body;
+    }
+
+    getFuture(String urll) {
+      return FutureBuilder(
+          future: getProduct(urll),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final List response = jsonDecode(snapshot.data);
+              return AnimationLimiter(
+                child: SliverStaggeredGrid.countBuilder(
+                  crossAxisCount: 2,
+                  itemCount: response.length,
+                  itemBuilder: (context, index) {
+                    return AnimationConfiguration.staggeredGrid(
+                      position: index,
+                      duration: Duration(seconds: 5),
+                      columnCount: 2,
+                      child: ScaleAnimation(
+                        child: FadeInAnimation(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              color: Colors.white,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/productdesc',
+                                    arguments: {
+                                      "image": response[index]['image'],
+                                      "index": index,
+                                      "title": response[index]['title'],
+                                      "price": response[index]['price'],
+                                      "desc": response[index]['description'],
+                                    });
+                              },
+                              child: Column(
+                                children: [
+                                  Hero(
+                                    tag: "product$index",
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image(
+                                        image: NetworkImage(
+                                            response[index]['image']),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(7.0, 5.0, 7.0, 5.0),
+                                    child: Center(child: Text("${response[index]['title']}")),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 8.0,
+                ),
+              );
+            } else {
+              return SliverToBoxAdapter(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          });
+    }
+
     List<String> title = [
       "All",
       "Electronics",
