@@ -31,14 +31,14 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
-    getProduct(String urll) async {
-      Response response = await get(Uri.parse("$urll"));
+    getProduct() async {
+      Response response = await get(Uri.parse("$url"));
       return response.body;
     }
 
-    getFuture(String urll) {
+    getFuture() {
       return FutureBuilder(
-          future: getProduct(urll),
+          future: getProduct(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final List response = jsonDecode(snapshot.data);
@@ -173,7 +173,7 @@ class _ProductListState extends State<ProductList> {
               floating: true,
               expandedHeight: 70.0,
             ),
-            getFuture(url),
+            getFuture(),
           ],
         ),
       ),
