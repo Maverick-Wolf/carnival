@@ -15,7 +15,7 @@ class Pages extends StatelessWidget {
     }
 
     getFuture() {
-      double height = MediaQuery.of(context).size.height / 2 - 10.0;
+      double height = MediaQuery.of(context).size.height / 2 - 60.0;
       return FutureBuilder(
           future: getProduct(),
           builder: (context, snapshot) {
