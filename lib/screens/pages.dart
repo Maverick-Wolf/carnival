@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:http/http.dart';
@@ -90,7 +91,10 @@ class Pages extends StatelessWidget {
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0.0, height, 0.0, height),
-                    child: CircularProgressIndicator(),
+                    child: SpinKitFadingCircle(
+                      color: Colors.white,
+                      size: 45.0,
+                    ),
                   ),
                 ),
               );
