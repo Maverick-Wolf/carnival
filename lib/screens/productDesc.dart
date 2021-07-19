@@ -41,107 +41,110 @@ class _ProductDescState extends State<ProductDesc> {
           backgroundColor: Colors.white,
         ),
       ),
-      body: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Container(
-          color: Colors.white,
-          // height: 200.0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Stack(
-                children: [
-                  Hero(
-                    tag: "product${dataReceived['index']}",
-                    child: Image(
-                      height: (MediaQuery.of(context).size.height / 2) - 40.0,
-                      width: (MediaQuery.of(context).size.width / 2) - 10.0,
-                      image: NetworkImage(dataReceived['image']),
-                    ),
+      body: Container(
+        color: Colors.white,
+        // height: 200.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Stack(
+              children: [
+                Hero(
+                  tag: "product${dataReceived['index']}",
+                  child: Image(
+                    height: (MediaQuery.of(context).size.height / 2) - 80.0,
+                    width: (MediaQuery.of(context).size.width / 2),
+                    image: NetworkImage(dataReceived['image']),
                   ),
-                  Visibility(
-                    visible: isVisible2,
-                    child: Positioned(
-                      top: 0.0,
-                      right: 0.0,
-                      child: IconButton(
-                          color: Colors.red,
-                          icon: Icon(Icons.favorite_rounded),
-                          onPressed: () {
-                            toggleButton();
-                          }),
-                    ),
+                ),
+                Visibility(
+                  visible: isVisible2,
+                  child: Positioned(
+                    top: 0.0,
+                    right: 0.0,
+                    child: IconButton(
+                        color: Colors.red,
+                        icon: Icon(
+                          Icons.favorite_rounded,
+                          size: 30.0,
+                        ),
+                        onPressed: () {
+                          toggleButton();
+                        }),
                   ),
-                  Visibility(
-                    visible: isVisible,
-                    child: Positioned(
-                      top: 0.0,
-                      right: 5.0,
-                      child: IconButton(
-                          color: Colors.red,
-                          icon: Icon(Icons.favorite_outline_rounded),
-                          onPressed: () {
-                            toggleButton();
-                          }),
-                    ),
+                ),
+                Visibility(
+                  visible: isVisible,
+                  child: Positioned(
+                    top: 0.0,
+                    right: 0.0,
+                    child: IconButton(
+                        color: Colors.red,
+                        icon: Icon(
+                          Icons.favorite_outline_rounded,
+                          size: 30.0,
+                        ),
+                        onPressed: () {
+                          toggleButton();
+                        }),
                   ),
-                ],
+                ),
+              ],
+            ),
+            Spacer(),
+            Text(
+              "\$${dataReceived['price']}",
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
+            ),
+            Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 15.0),
+              child: Text(
+                "${dataReceived['desc']}",
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
               ),
-              Spacer(),
-              Text(
-                "\$${dataReceived['price']}",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 15.0),
+            ),
+            Spacer(),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6.0),
+                  color: Color(0xFFFFA41C)),
+              width: MediaQuery.of(context).size.width - 30.0,
+              height: 50.0,
+              child: Center(
                 child: Text(
-                  "${dataReceived['desc']}",
+                  "Buy Now",
                   style: TextStyle(
-                    fontSize: 14.0,
+                    fontSize: 17.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                    color: Color(0xFFFFA41C)),
-                width: MediaQuery.of(context).size.width - 30.0,
-                height: 40.0,
-                child: Center(
-                  child: Text(
-                    "Buy Now",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                    ),
+            ),
+            Spacer(),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6.0),
+                  color: Color(0xFFFFD814)),
+              width: MediaQuery.of(context).size.width - 30.0,
+              height: 50.0,
+              child: Center(
+                child: Text(
+                  "Add to Cart",
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                    color: Color(0xFFFFD814)),
-                width: MediaQuery.of(context).size.width - 30.0,
-                height: 40.0,
-                child: Center(
-                  child: Text(
-                    "Add to Cart",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
+            ),
+            Spacer(),
+          ],
         ),
       ),
     );

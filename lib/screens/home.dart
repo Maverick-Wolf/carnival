@@ -1,75 +1,66 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class Home extends StatelessWidget {
-  getProduct() async {
-    Response response =
-        await get(Uri.parse("https://fakestoreapi.com/products/categories"));
-    return response.body;
-  }
-
   @override
   Widget build(BuildContext context) {
+    // List receivedData = getProduct();
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.0),
-        child: AppBar(
-          title: Text(
-            "Select A Category",
-            style: TextStyle(
-              fontSize: 20.0,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          centerTitle: true,
-        ),
-      ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: FutureBuilder(
-            future: getProduct(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final List response = jsonDecode(snapshot.data);
-                response.add("All Products");
-                return ListView.builder(
-                    itemCount: response.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                        child: InkWell(
-                          // splashColor: Colors.blue,
-                          onTap: () {
-                            Navigator.pushNamed(context, '/productlist',
-                                arguments: {"category": response[index]});
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                color: Colors.grey[400]),
-                            height: 70.0,
-                            width: MediaQuery.of(context).size.width - 20.0,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                response[index].toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.0,
-                                  letterSpacing: 1.2,
-                                ),
-                              ),
-                            ),
-                          ),
+        child: Center(
+          child: InkWell(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, "/productlist");
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.black,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "Welcome to Carnival : )",
+                        textStyle: TextStyle(
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
                         ),
-                      );
-                    });
-              } else {
-                return Container();
-              }
-            }),
+                        speed: Duration(milliseconds: 160),
+                      ),
+                    ],
+                    totalRepeatCount: 1,
+                    displayFullTextOnTap: true,
+                    stopPauseOnTap: true,
+                  ),
+                  SizedBox(
+                    height: 7.0,
+                  ),
+                  Container(
+                    height: 30.0,
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        FadeAnimatedText(
+                          "Tap anywhere to Enter",
+                          textStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                          duration: Duration(milliseconds: 3000),
+                        ),
+                      ],
+                      repeatForever: true,
+                      displayFullTextOnTap: true,
+                      stopPauseOnTap: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
