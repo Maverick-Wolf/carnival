@@ -60,9 +60,14 @@ class Pages extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  Divider(
+                                    color: Colors.black,
+                                    height: 10.0,
+                                    thickness: 2.0,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.fromLTRB(
-                                        7.0, 5.0, 7.0, 5.0),
+                                        7.0, 0.0, 7.0, 5.0),
                                     child: Center(
                                         child: Text(
                                             "${response[index]['title']}")),

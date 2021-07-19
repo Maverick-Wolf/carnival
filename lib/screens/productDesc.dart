@@ -66,7 +66,7 @@ class _ProductDescState extends State<ProductDesc> {
                     visible: isVisible2,
                     child: Positioned(
                       top: 0.0,
-                      right: 5.0,
+                      right: 0.0,
                       child: IconButton(
                           color: Colors.red,
                           icon: Icon(Icons.favorite_rounded),
