@@ -1,16 +1,13 @@
 # carnival
 
-A new Flutter project.
++ This is a basic shopping application made using Flutter.
 
-## Getting Started
+### What all new stuff i learned
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
++ This app uses SliverAppBar (app bar the disappears when scrolling) so learned to implement that, *was not easy*
++ Learned how to use FutureBuilder in Sliver List
++ Learned how to use staggered grid view so the page where all the products are diplayed have grids of variying size according to the height of the product image
++ Learned how to use "Hero" to keep the product image always the point of focus when changing pages => *productList to productDescription page swap*
++ Learned about "Visibility" to hide a widget from the screen when not needed
++ Learned how to use a ListView inside AppBar and make it act like a TopNavigationBar
++ So all in all tried making the UI/UX similar to the Pinterest App 
